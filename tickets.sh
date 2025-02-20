@@ -73,8 +73,9 @@ hello()
   [ -s "$_th/todo.txt" ] && { cat "$_th/todo.txt"; }
 }
 
-edhello() { vi "$TICKET_HOME/hello.txt"; }
-edtodo() { vi "$TICKET_HOME/todo.txt"; }
+edhello() { [ -d "$TICKET_HOME" ] && vi "$TICKET_HOME/hello.txt"; }
+edwelcome() { [ -d "$TICKET_HOME" ] && vi "$TICKET_HOME/welcome-line.txt"; }
+edtodo() { [ -d "$TICKET_HOME" ] && vi "$TICKET_HOME/todo.txt"; }
 home() { [ -d "$TICKET_HOME" ] && { cd "$TICKET_HOME"; return 0; } || { return $?; }; }
 root() { [ -s "$TICKET_HOME/root.txt" ] && { cd $TICKET_HOME/$(< $TICKET_HOME/root.txt); }; }
 
@@ -119,7 +120,7 @@ tickets()
 
  for ticket_d in $TICKETS_ROOT/*
  do
-   # if "state.txt" read it or set state to "open"
+   # if "state.txt" read it or set state to "O" (open)
    state="O"
    [ -s "$ticket_d/state.txt" ] && { state=$(< "$ticket_d/state.txt" ); }
 
